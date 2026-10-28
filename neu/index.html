@@ -9,9 +9,28 @@
 <style>
   html, body { margin: 0; height: 100%; background: #F5F6FB; }
   iframe { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; }
+  #ztm { position: fixed; left: 12px; right: 12px; bottom: 84px; z-index: 9; background: #1a1d2e; color: #fff; font: 600 12px/1.45 system-ui, sans-serif; padding: 9px 12px; border-radius: 10px; text-align: center; box-shadow: 0 8px 20px -8px rgba(0,0,0,.5); }
 </style>
 </head>
 <body>
 <iframe src="https://script.google.com/macros/s/AKfycbxFRSbFBzR-_ineaVUoHUpHwWxD03JSjvI0-fosqkvVBFjYa0krCZo3i5e8ALtmWuEs/exec?v=hell" allow="clipboard-write"></iframe>
+<script>
+(function () {
+  var done = false;
+  function f(ms) { return (Math.max(0, ms) / 1000).toFixed(1).replace('.', ',') + ' s'; }
+  window.addEventListener('message', function (e) {
+    var d = e.data;
+    if (done || !d || d.t !== 'ztm' || !/googleusercontent\.com$/.test(new URL(e.origin).hostname)) return;
+    done = true;
+    var o = performance.timeOrigin, start = d.o - o, total = d.o + d.v - o;
+    var s = 'Ladezeit ' + f(total) + ': Google ' + f(start) + ', Aufbau im Handy ' + f(d.v);
+    try { var h = JSON.parse(localStorage.getItem('ztm') || '[]'); h.unshift([Date.now(), Math.round(start), Math.round(d.v)]); localStorage.setItem('ztm', JSON.stringify(h.slice(0, 20))); } catch (x) {}
+    var b = document.createElement('div'); b.id = 'ztm'; b.textContent = s;
+    b.onclick = function () { b.remove(); };
+    document.body.appendChild(b);
+    setTimeout(function () { b.remove(); }, 9000);
+  });
+})();
+</script>
 </body>
 </html>
