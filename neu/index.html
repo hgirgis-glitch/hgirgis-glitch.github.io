@@ -11,6 +11,8 @@
   iframe { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; }
   #sk { position: fixed; inset: 0; z-index: 8; background: #e9edf6; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; transition: opacity .25s; }
   #sk.x { opacity: 0; pointer-events: none; }
+  #sk.snap { overflow: hidden; pointer-events: none; }
+  #sk.snap .zstand b { display: none; }
   #sk .h { background: #fff; padding: 14px 16px 12px; box-shadow: 0 6px 18px -14px rgba(20,25,60,.3); display: flex; align-items: center; gap: 12px; padding-top: calc(14px + env(safe-area-inset-top, 0px)); }
   #sk .l { font-weight: 900; font-size: 18px; color: #ec2b2b; display: flex; align-items: center; gap: 7px; letter-spacing: .01em; }
   #sk .p { width: 11px; height: 11px; border-radius: 50%; background: #ec2b2b; animation: pu 1.8s infinite; }
@@ -30,17 +32,33 @@
 <div id="sk" aria-hidden="true"><div class="h"><div class="l"><span class="p"></span>CODE RED</div><div class="t">lädt …</div></div><div class="b"><div class="c"></div><div class="c"></div><div class="c"></div><div class="c"></div><div class="c w"></div></div></div>
 <script>
 (function () {
-  var done = false, sk = document.getElementById('sk');
-  function hide() { sk.classList.add('x'); setTimeout(function () { sk.remove(); }, 400); }
-  setTimeout(function () { if (sk.parentNode) hide(); }, 8000);
+  var done = false, sk = document.getElementById('sk'), de = document.documentElement, snapped = false;
+  function ok(e) { try { return /googleusercontent\.com$/.test(new URL(e.origin).hostname); } catch (x) { return false; } }
+  // zuletzt gespeicherte Ansicht sofort zeigen, bis die echte Seite bereit ist
+  try {
+    var sn = JSON.parse(localStorage.getItem('zsnap') || 'null');
+    if (sn && sn.html && Date.now() - sn.ts < 14 * 86400000) {
+      var st = document.createElement('style'); st.textContent = sn.css || ''; document.head.appendChild(st);
+      sk.innerHTML = sn.html; sk.className = 'snap';
+      de.classList.add('hellui');
+      if (localStorage.getItem('zpv') !== '0') de.classList.add('pv');
+      var z = sk.querySelector('#zst'); if (z) z.textContent = (z.textContent || '').trim() + ' (gespeichert)';
+      snapped = true;
+    }
+  } catch (x) {}
+  function hide() { if (!sk.parentNode) return; sk.classList.add('x'); setTimeout(function () { if (sk.parentNode) sk.remove(); }, 400); }
+  setTimeout(hide, snapped ? 25000 : 8000);
   function f(ms) { return (Math.max(0, ms) / 1000).toFixed(1).replace('.', ',') + ' s'; }
   window.addEventListener('message', function (e) {
     var d = e.data;
-    if (done || !d || d.t !== 'ztm' || !/googleusercontent\.com$/.test(new URL(e.origin).hostname)) return;
+    if (!d || !ok(e)) return;
+    if (d.t === 'zsnap' && d.html) { try { localStorage.setItem('zsnap', JSON.stringify({ html: d.html, css: d.css, ts: d.ts })); } catch (x) {} return; }
+    if (d.t === 'zpv') { try { localStorage.setItem('zpv', d.pv ? '1' : '0'); } catch (x) {} return; }
+    if (done || d.t !== 'ztm') return;
     done = true;
     hide();
     var o = performance.timeOrigin, start = d.o - o, total = d.o + d.v - o;
-    var s = 'Ladezeit ' + f(total) + ': Google ' + f(start) + ', Aufbau im Handy ' + f(d.v);
+    var s = 'Ladezeit ' + f(total) + ': Google ' + f(start) + ', Aufbau im Handy ' + f(d.v) + (snapped ? ' (gespeicherte Ansicht war sofort da)' : '');
     try { var h = JSON.parse(localStorage.getItem('ztm') || '[]'); h.unshift([Date.now(), Math.round(start), Math.round(d.v)]); localStorage.setItem('ztm', JSON.stringify(h.slice(0, 20))); } catch (x) {}
     var b = document.createElement('div'); b.id = 'ztm'; b.textContent = s;
     b.onclick = function () { b.remove(); };
