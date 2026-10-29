@@ -7,21 +7,38 @@
 <meta name="robots" content="noindex">
 <title>Code RED</title>
 <style>
-  html, body { margin: 0; height: 100%; background: #F5F6FB; }
+  html, body { margin: 0; height: 100%; background: #e9edf6; }
   iframe { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; }
+  #sk { position: fixed; inset: 0; z-index: 8; background: #e9edf6; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; transition: opacity .25s; }
+  #sk.x { opacity: 0; pointer-events: none; }
+  #sk .h { background: #fff; padding: 14px 16px 12px; box-shadow: 0 6px 18px -14px rgba(20,25,60,.3); display: flex; align-items: center; gap: 12px; padding-top: calc(14px + env(safe-area-inset-top, 0px)); }
+  #sk .l { font-weight: 900; font-size: 18px; color: #ec2b2b; display: flex; align-items: center; gap: 7px; letter-spacing: .01em; }
+  #sk .p { width: 11px; height: 11px; border-radius: 50%; background: #ec2b2b; animation: pu 1.8s infinite; }
+  @keyframes pu { 0% { box-shadow: 0 0 0 0 rgba(236,43,43,.5); } 70% { box-shadow: 0 0 0 8px rgba(236,43,43,0); } 100% { box-shadow: 0 0 0 0 rgba(236,43,43,0); } }
+  #sk .t { margin-left: auto; font-size: 11px; color: #6f7591; }
+  #sk .b { padding: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  #sk .c { background: #fff; border-radius: 16px; height: 112px; position: relative; overflow: hidden; box-shadow: 0 1px 2px rgba(20,25,60,.05); }
+  #sk .c.w { grid-column: 1 / -1; height: 150px; }
+  #sk .c:after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 20%, rgba(91,95,240,.08) 50%, transparent 80%); transform: translateX(-100%); animation: sh 1.4s infinite; }
+  @keyframes sh { to { transform: translateX(100%); } }
+  @media (prefers-reduced-motion: reduce) { #sk .p, #sk .c:after { animation: none; } }
   #ztm { position: fixed; left: 12px; right: 12px; bottom: 84px; z-index: 9; background: #1a1d2e; color: #fff; font: 600 12px/1.45 system-ui, sans-serif; padding: 9px 12px; border-radius: 10px; text-align: center; box-shadow: 0 8px 20px -8px rgba(0,0,0,.5); }
 </style>
 </head>
 <body>
 <iframe src="https://script.google.com/macros/s/AKfycbxFRSbFBzR-_ineaVUoHUpHwWxD03JSjvI0-fosqkvVBFjYa0krCZo3i5e8ALtmWuEs/exec?v=hell" allow="clipboard-write"></iframe>
+<div id="sk" aria-hidden="true"><div class="h"><div class="l"><span class="p"></span>CODE RED</div><div class="t">lädt …</div></div><div class="b"><div class="c"></div><div class="c"></div><div class="c"></div><div class="c"></div><div class="c w"></div></div></div>
 <script>
 (function () {
-  var done = false;
+  var done = false, sk = document.getElementById('sk');
+  function hide() { sk.classList.add('x'); setTimeout(function () { sk.remove(); }, 400); }
+  setTimeout(function () { if (sk.parentNode) hide(); }, 8000);
   function f(ms) { return (Math.max(0, ms) / 1000).toFixed(1).replace('.', ',') + ' s'; }
   window.addEventListener('message', function (e) {
     var d = e.data;
     if (done || !d || d.t !== 'ztm' || !/googleusercontent\.com$/.test(new URL(e.origin).hostname)) return;
     done = true;
+    hide();
     var o = performance.timeOrigin, start = d.o - o, total = d.o + d.v - o;
     var s = 'Ladezeit ' + f(total) + ': Google ' + f(start) + ', Aufbau im Handy ' + f(d.v);
     try { var h = JSON.parse(localStorage.getItem('ztm') || '[]'); h.unshift([Date.now(), Math.round(start), Math.round(d.v)]); localStorage.setItem('ztm', JSON.stringify(h.slice(0, 20))); } catch (x) {}
