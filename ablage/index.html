@@ -16,10 +16,13 @@
 <iframe src="https://script.google.com/macros/s/AKfycbxFRSbFBzR-_ineaVUoHUpHwWxD03JSjvI0-fosqkvVBFjYa0krCZo3i5e8ALtmWuEs/exec?v=hell&open=ablage" allow="clipboard-write"></iframe>
 <button id="zurueck" type="button" aria-label="Zurück zu Code Red LIVE"></button>
 <script>
+  // Zurück zu Code Red LIVE. Das alte Dashboard unter der Ablage wird nie gezeigt.
+  var LIVE = 'intent://zurueck#Intent;scheme=codered-live;package=de.hg.codered.live;end';
   document.getElementById('zurueck').addEventListener('click', function () {
-    // Zurück zur App Code Red LIVE (nicht zum alten Dashboard)
-    location.href = 'intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=de.hg.codered.live;end';
-    setTimeout(function () { try { history.back(); } catch (e) {} }, 900);
+    location.href = LIVE;
+    setTimeout(function () {
+      if (document.visibilityState === 'visible') { try { window.close(); } catch (e) {} }
+    }, 1500);
   });
 </script>
 </body>
