@@ -12,4 +12,11 @@
     "package_name": "de.hg.codered.neu",
     "sha256_cert_fingerprints": ["E3:2E:D9:07:EC:06:4F:68:8D:D0:9C:70:F4:31:F0:67:97:43:53:9D:8A:79:3C:17:9D:7C:CA:40:E8:38:8E:A2"]
   }
+},{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "de.hg.codered.live",
+    "sha256_cert_fingerprints": ["E3:2E:D9:07:EC:06:4F:68:8D:D0:9C:70:F4:31:F0:67:97:43:53:9D:8A:79:3C:17:9D:7C:CA:40:E8:38:8E:A2"]
+  }
 }]
