@@ -9,9 +9,18 @@
 <style>
   html, body { margin: 0; height: 100%; background: #0E1620; }
   iframe { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; }
+  #zurueck { position: fixed; left: 0; top: 0; width: 170px; height: calc(env(safe-area-inset-top, 0px) + 100px); z-index: 10; background: transparent; border: 0; padding: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 </style>
 </head>
 <body>
 <iframe src="https://script.google.com/macros/s/AKfycbxFRSbFBzR-_ineaVUoHUpHwWxD03JSjvI0-fosqkvVBFjYa0krCZo3i5e8ALtmWuEs/exec?v=hell&open=ablage" allow="clipboard-write"></iframe>
+<button id="zurueck" type="button" aria-label="Zurück zu Code Red LIVE"></button>
+<script>
+  document.getElementById('zurueck').addEventListener('click', function () {
+    // Zurück zur App Code Red LIVE (nicht zum alten Dashboard)
+    location.href = 'intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=de.hg.codered.live;end';
+    setTimeout(function () { try { history.back(); } catch (e) {} }, 900);
+  });
+</script>
 </body>
 </html>
