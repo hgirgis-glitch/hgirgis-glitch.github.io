@@ -7,310 +7,587 @@
 <meta name="theme-color" content="#0d0d0d">
 <title>Knips: Die Einwegkamera für euer Event</title>
 <meta name="description" content="Knips ist die private Einwegkamera für Hochzeiten, Geburtstage und Feiern. Gäste treten per QR Code bei, ohne Download. Das Album öffnet sich erst nach dem Fest.">
-<!-- Arbeitstitel "Knips": Markenrecht vor Veröffentlichung prüfen (DPMA). -->
-<!-- Keine externen Schriften, kein Tracking: DSGVO sicher für den Start. Schrift später selbst hosten. -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230d0d0d'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23f2b987' stroke-width='3'/%3E%3C/svg%3E">
+<meta property="og:title" content="Knips: Die Einwegkamera für euer Event">
+<meta property="og:description" content="Eure Gäste knipsen, das Album öffnet sich erst nach dem Fest. Ohne App Download.">
+<meta property="og:type" content="website">
+<!-- Name "Knips": Markenrecht vor Veröffentlichung prüfen (DPMA, EUIPO). -->
+<!-- Keine externen Ressourcen, kein Tracking, keine Google Fonts: DSGVO sicher für den Start. -->
 <style>
 :root{
-  --bg:#0d0d0d; --surface:#1c1c19; --text:#fff; --muted:#aaa79f; --accent:#f2b987;
+  --bg:#0d0d0d; --surface:#1c1c19; --surface2:#141413; --line:#ffffff1c;
+  --text:#fff; --muted:#aaa79f; --accent:#f2b987; --accent-ink:#2a1708;
   --radius:18px; --content:min(90%,1296px);
   --serif:"Instrument Serif","Iowan Old Style","Palatino Linotype",Georgia,serif;
   --sans:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:90px}
-body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth;scroll-padding-top:96px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.skip{position:absolute;left:12px;top:-60px;z-index:100;background:#fff;color:#000;padding:10px 16px;border-radius:10px;text-decoration:none}
+.skip:focus{top:12px}
 .wrap{width:var(--content);margin-inline:auto}
-.eyebrow{font-size:14px;letter-spacing:.25em;text-transform:uppercase;color:#fff9;margin:0 0 16px}
-h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.02;margin:0}
-h1{font-size:clamp(44px,7vw,84px)}
-h2{font-size:clamp(36px,5vw,64px)}
-h3{font-size:28px}
+.eyebrow{font-size:14px;letter-spacing:.25em;text-transform:uppercase;color:#fff9;margin:0 0 18px}
+h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1;margin:0;letter-spacing:-.01em}
+h1{font-size:clamp(46px,7.2vw,86px)}
+h2{font-size:clamp(38px,5.2vw,68px)}
+h3{font-size:30px}
 em{font-style:italic}
-section{padding:120px 0}
-.btn{display:inline-flex;align-items:center;gap:10px;padding:16px 26px;border-radius:999px;background:#fff;color:#0d0d0d;font-weight:600;text-decoration:none;border:0;font:inherit;font-weight:600;cursor:pointer;transition:transform .2s,background .2s}
-.btn:hover{transform:translateY(-2px);background:var(--accent)}
+section{padding:130px 0}
+svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:16px 28px;border-radius:999px;background:#fff;color:#0d0d0d;font:600 16px var(--sans);text-decoration:none;border:0;cursor:pointer;transition:transform .25s,background .25s,box-shadow .25s}
+.btn:hover{transform:translateY(-2px);background:var(--accent);box-shadow:0 10px 30px #f2b98733}
+.btn.accent{background:var(--accent);color:var(--accent-ink);border-radius:var(--radius)}
+.btn.accent:hover{background:#fff}
 .btn.ghost{background:transparent;color:#fff;border:1px solid #fff4}
+.btn.ghost:hover{background:#ffffff14;box-shadow:none}
 
-/* Header */
-header{position:fixed;inset:12px 0 auto;z-index:10}
-.nav{width:min(94%,1296px);margin-inline:auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 22px;border-radius:999px;background:#1c1c19cc;backdrop-filter:blur(14px);border:1px solid #fff1}
-.logo{font-family:var(--serif);font-size:28px;text-decoration:none}
-.logo span{color:var(--accent)}
-.nav ul{display:flex;gap:30px;list-style:none;margin:0;padding:0}
-.nav a{text-decoration:none}
-.nav ul a{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:#fffc}
-.nav ul a:hover{color:var(--accent)}
-.nav .btn{padding:10px 18px;font-size:14px}
-@media(max-width:860px){.nav ul{display:none}}
-
-/* Hero */
-.hero{padding-top:150px;position:relative;overflow:hidden}
-.hero .grid{display:grid;grid-template-columns:1fr 1.15fr;gap:40px;align-items:center}
-.hero p.lead{font-size:18px;color:var(--muted);max-width:44ch;margin:28px 0 36px}
-.hero-actions{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
-.qrbox{margin-top:48px;display:inline-flex;gap:18px;align-items:center;padding:16px 20px;border-radius:var(--radius);background:var(--surface);max-width:360px}
-.qr{width:84px;height:84px;border-radius:8px;background:
-  conic-gradient(from 90deg at 50% 50%,#fff 0 25%,#0d0d0d 0 50%,#fff 0 75%,#0d0d0d 0) 0 0/14px 14px;flex:none;border:6px solid #fff}
-.qrbox small{color:var(--muted);display:block;line-height:1.4}
-.qrbox strong{display:block;font-size:12px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:4px}
-.phones{position:relative;height:620px}
-.phone{position:absolute;width:290px;aspect-ratio:9/19;border-radius:42px;background:#0b0b0b;border:3px solid #3a3a52;box-shadow:0 30px 80px #0009;overflow:hidden}
-.phone::before{content:"";position:absolute;top:10px;left:50%;translate:-50% 0;width:92px;height:26px;border-radius:99px;background:#000;z-index:3}
-.phone.a{left:6%;top:0;rotate:-3deg}
-.phone.b{right:2%;top:70px;rotate:3deg;width:270px}
-.cover{position:absolute;inset:0 0 38%;background:
-  radial-gradient(circle at 70% 25%,#ffd9a8 0,transparent 40%),linear-gradient(160deg,#355c4a,#1b2a24 60%,#0d0d0d)}
-.cover h4{font-family:var(--serif);font-weight:400;font-size:28px;line-height:1.05;text-align:center;position:absolute;bottom:56px;inset-inline:16px;margin:0}
-.stats{position:absolute;bottom:16px;inset-inline:12px;display:flex;justify-content:space-around;font-family:var(--serif);font-size:20px;text-align:center}
-.stats small{display:block;font:11px var(--sans);color:#ffffffb0}
-.gallery{position:absolute;inset:auto 10px 10px;height:36%;display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.gallery i{border-radius:12px;display:block}
-.g1{background:linear-gradient(150deg,#d9a38a,#5a3a35)}
-.g2{background:linear-gradient(150deg,#a9b9a0,#2f4437)}
-.g3{background:linear-gradient(150deg,#e9d3a6,#7b5a2c)}
-.g4{background:linear-gradient(150deg,#9ab0c9,#26354c)}
-.viewfinder{position:absolute;inset:48px 12px 120px;border-radius:24px;background:
-  radial-gradient(circle at 40% 45%,#ffe7bf,transparent 35%),linear-gradient(170deg,#4a3b52,#14111a)}
-.shutter{position:absolute;bottom:34px;left:50%;translate:-50% 0;width:62px;height:62px;border-radius:50%;border:4px solid #fff6;background:#111}
-.counter{position:absolute;bottom:42px;left:22px;font-family:var(--serif);background:#000;border-radius:12px;padding:6px 10px;font-size:18px}
-.topbar{position:absolute;top:44px;inset-inline:18px;text-align:center;font-family:var(--serif);font-size:17px;z-index:2}
-.topbar small{display:block;font:11px var(--sans);color:var(--muted)}
+/* ---------- Header ---------- */
+header{position:fixed;inset:12px 0 auto;z-index:50}
+.nav{width:min(94%,1296px);margin-inline:auto;display:flex;align-items:center;gap:20px;padding:11px 14px 11px 24px;border-radius:999px;background:#1c1c19b8;-webkit-backdrop-filter:blur(18px) saturate(1.3);backdrop-filter:blur(18px) saturate(1.3);border:1px solid #ffffff14}
+.logo{font-family:var(--serif);font-size:30px;text-decoration:none;line-height:1;display:flex;align-items:center;gap:8px;margin-right:auto}
+.logo b{width:22px;height:22px;border-radius:50%;border:3.5px solid var(--accent);display:inline-block}
+.menu{display:flex;gap:34px;list-style:none;margin:0 auto;padding:0}
+.menu>li{position:relative}
+.menu a,.menu button.dd{font:500 13px var(--sans);letter-spacing:.18em;text-transform:uppercase;color:#fffc;text-decoration:none;background:none;border:0;cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:8px 0}
+.menu a:hover,.menu button.dd:hover{color:var(--accent)}
+.sub{position:absolute;top:100%;left:-16px;min-width:220px;background:#1c1c19f2;border:1px solid var(--line);border-radius:16px;padding:8px;opacity:0;visibility:hidden;translate:0 6px;transition:.2s;list-style:none;margin:8px 0 0}
+.menu li:hover .sub,.menu li:focus-within .sub{opacity:1;visibility:visible;translate:0 0}
+.sub a{display:block;padding:10px 14px;border-radius:10px;letter-spacing:.1em;font-size:12.5px}
+.sub a:hover{background:#ffffff12}
+.nav .btn{padding:11px 20px;font-size:14px}
+.burger{display:none;background:none;border:0;color:#fff;font-size:26px;cursor:pointer;padding:6px}
+.drawer{display:none}
 @media(max-width:900px){
-  .hero .grid{grid-template-columns:1fr}
-  .phones{height:560px}
-  .phone.a{left:0}.phone.b{right:0}
-  .phone{width:min(54vw,260px)}
-  .phone.b{width:min(50vw,240px)}
-  section{padding:80px 0}
+  .menu,.nav>.btn{display:none}
+  .burger{display:block}
+  .nav{padding-left:20px}
+  .drawer{position:fixed;inset:76px 3% auto;background:#161614f5;-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border:1px solid var(--line);border-radius:24px;padding:14px;display:block;opacity:0;visibility:hidden;translate:0 -8px;transition:.25s;z-index:49}
+  .drawer.open{opacity:1;visibility:visible;translate:0 0}
+  .drawer a{display:block;padding:14px 16px;font:500 14px var(--sans);letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border-radius:12px}
+  .drawer a:hover{background:#ffffff12}
+  .drawer .btn{margin-top:8px;width:100%;justify-content:center;letter-spacing:0;text-transform:none;font-size:16px}
 }
 
-/* Vorteile */
-.benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:56px}
-.benefit{padding:32px;border-radius:var(--radius);background:var(--surface)}
-.benefit h3{margin-bottom:12px}
-.benefit p{color:var(--muted);margin:0}
-.benefit .num{font-family:var(--serif);font-size:56px;color:var(--accent);line-height:1}
-@media(max-width:900px){.benefits{grid-template-columns:1fr}}
+/* ---------- Phone Komponente ---------- */
+.phone{position:relative;width:300px;aspect-ratio:9/19.2;border-radius:46px;background:#09090a;border:3px solid #3b3b55;box-shadow:inset 0 0 0 5px #0a0a0c,0 40px 90px #000a,0 0 60px #f2b98712;overflow:hidden;isolation:isolate;flex:none}
+.phone::before{content:"";position:absolute;top:11px;left:50%;translate:-50% 0;width:96px;height:28px;border-radius:99px;background:#000;z-index:5}
+.scr{position:absolute;inset:0;font-size:14px}
+.ph{position:absolute;overflow:hidden;background:var(--g,#444)}
+.ph::after{content:"";position:absolute;inset:0;background:var(--grain);mix-blend-mode:overlay;opacity:.5;pointer-events:none}
+.ph::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at var(--x,35%) var(--y,35%),var(--hi,#ffffff55),transparent 42%);}
+.thumb{position:relative}
 
-/* Anlässe */
-.cases{text-align:center}
-.tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:36px 0}
-.tab{padding:10px 18px;border-radius:12px;border:1px solid #fff2;background:transparent;color:#fffb;font:inherit;font-size:14px;cursor:pointer}
-.tab[aria-selected="true"]{background:#fff;color:#0d0d0d}
-.quote{font-family:var(--serif);font-size:clamp(32px,4.4vw,56px);line-height:1.05;max-width:18ch;margin:0 auto;min-height:2.2em;transition:opacity .35s}
-.case-stage{display:flex;justify-content:center;gap:24px;margin-top:48px;perspective:1000px}
-.card{width:min(40vw,260px);aspect-ratio:3/4;border-radius:22px;border:1px solid #fff1;transition:background .5s,transform .5s}
-.card:nth-child(1){rotate:-4deg}.card:nth-child(2){rotate:4deg;margin-top:34px}
+/* Event Cover */
+.cover{position:absolute;inset:0 0 45%;--g:linear-gradient(165deg,#3d6a56,#1f352b 55%,#0b0e0c);--hi:#ffe2b0aa;--x:70%;--y:22%}
+.cover::after{opacity:.35}
+.cover .t{position:absolute;inset:auto 14px 70px;z-index:2;text-align:center;font-family:var(--serif);font-size:30px;line-height:1.02;text-shadow:0 2px 20px #0008}
+.stats{position:absolute;z-index:2;inset:auto 10px 16px;display:flex;justify-content:space-around;font-family:var(--serif);font-size:20px;text-align:center}
+.stats small{display:block;font:11px var(--sans);color:#ffffffb8;margin-top:2px}
+.actions{position:absolute;z-index:2;inset:58% 12px auto;display:flex;gap:8px}
+.actions .cam{flex:1;height:44px;border-radius:14px;background:#fff;color:#000;display:grid;place-items:center;font-size:18px}
+.actions .sq{width:44px;height:44px;border-radius:14px;background:#ffffff18;display:grid;place-items:center;font-size:17px}
+.grid4{position:absolute;inset:auto 10px 10px;height:30%;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:7px}
+.grid4 .ph{position:relative;border-radius:14px}
+.grid4 span{position:absolute;z-index:2;left:10px;bottom:7px;font-family:var(--serif);font-style:italic;font-size:14px}
 
-/* Ablauf */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:64px}
-.step .shot{aspect-ratio:3/4;border-radius:28px;background:var(--surface);border:1px solid #fff1;margin-bottom:24px;position:relative;overflow:hidden;display:grid;place-items:center}
-.step .shot span{font-family:var(--serif);font-size:96px;color:#ffffff22}
-.step p{color:var(--muted);margin:10px 0 0}
-@media(max-width:900px){.steps{grid-template-columns:1fr}}
+/* Kamera */
+.bar{position:absolute;z-index:3;inset:44px 12px auto;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.bar .b{width:38px;height:38px;border-radius:12px;background:#ffffff14;display:grid;place-items:center;font-size:16px}
+.bar .ttl{font-family:var(--serif);font-size:17px;text-align:center;line-height:1.1}
+.bar .ttl small{display:block;font:11px var(--sans);color:var(--muted)}
+.vf{position:absolute;inset:100px 10px 128px;border-radius:26px;--g:linear-gradient(170deg,#524052,#17121c 70%);--hi:#ffe3b8cc;--x:42%;--y:46%}
+.ctl{position:absolute;inset:auto 18px 100px;display:flex;align-items:center;justify-content:space-between;z-index:3;font-size:15px;color:#fffc}
+.zoom{display:flex;background:#ffffff14;border-radius:99px;padding:3px;font-size:11px}
+.zoom span{padding:5px 10px;border-radius:99px;color:#fff8}
+.zoom span.on{background:#000;color:#fff}
+.bot{position:absolute;inset:auto 18px 26px;display:flex;align-items:center;justify-content:space-between;z-index:3}
+.cnt{font-family:var(--serif);background:#000;border-radius:14px;padding:9px 12px;font-size:20px;min-width:56px;text-align:center}
+.shut{width:64px;height:64px;border-radius:50%;border:4px solid #ffffff55;background:#101010;box-shadow:inset 0 0 0 3px #000}
+.thumb{width:48px;height:48px;border-radius:14px;--g:linear-gradient(150deg,#e0a58c,#4a2a28)}
 
-/* Datenschutz */
-.privacy{background:var(--surface);border-radius:32px;padding:64px}
-.privacy ul{margin:32px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:18px 40px}
-.privacy li{padding-left:28px;position:relative;color:#ddd}
-.privacy li::before{content:"✱";position:absolute;left:0;color:var(--accent)}
-@media(max-width:900px){.privacy{padding:32px}.privacy ul{grid-template-columns:1fr}}
+/* Formular / Teilen */
+.sheet{position:absolute;inset:auto 0 0;background:#141413;border-radius:26px 26px 0 0;padding:18px 18px 22px;z-index:3;border-top:1px solid #ffffff14}
+.sheet::before{content:"";display:block;width:40px;height:4px;border-radius:9px;background:#ffffff30;margin:0 auto 16px}
+.sheet h5{font:400 22px var(--serif);margin:0 0 4px}
+.sheet p{margin:0;color:var(--muted);font-size:12px;line-height:1.4}
+.qrimg{width:120px;height:120px;margin:16px auto 14px;background:#fff;border-radius:12px;padding:9px}
+.qrimg i{display:block;width:100%;height:100%;background:conic-gradient(from 90deg,#000 0 25%,#fff 0 50%,#000 0 75%,#fff 0) 0 0/11px 11px;opacity:.95}
+.chips{display:flex;gap:7px;justify-content:center;font-size:11px}
+.chips span{display:inline-flex;gap:5px;align-items:center;padding:8px 11px;border:1px solid #ffffff22;border-radius:10px;background:#1c1c19}
+.field{margin:14px 0;border:1px solid #ffffff1f;border-radius:14px;padding:13px 14px;font-size:12px;color:#fffa;background:#101010}
+.dots{display:flex;gap:5px;align-items:center}
+.dots i{width:5px;height:5px;border-radius:50%;background:#ffffff33}.dots i.on{background:#fff}
+.next{background:#fff;color:#000;border-radius:12px;padding:9px 16px;font-size:12px;font-weight:600;display:inline-flex;gap:6px;align-items:center}
+.row2{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+.addcover{display:inline-flex;gap:5px;padding:6px 10px;border:1px solid #ffffff22;border-radius:9px;font-size:11px;margin-top:10px;background:#1c1c19}
+.strip{position:absolute;inset:44px 0 auto;height:34%;display:flex;gap:8px;padding:0 14px}
+.strip .ph{position:relative;flex:1;border-radius:18px}
 
-/* FAQ */
-.faq details{border-bottom:1px solid #fff2;padding:22px 0}
-.faq summary{cursor:pointer;font-family:var(--serif);font-size:28px;list-style:none;display:flex;justify-content:space-between;gap:20px}
-.faq summary::after{content:"+";color:var(--accent)}
-.faq details[open] summary::after{content:"–"}
-.faq p{color:var(--muted);max-width:70ch;margin:14px 0 0}
+/* Alben / aktiv */
+.lbl{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#fff7;margin:0 0 10px}
+.act{position:absolute;inset:62px 0 auto;padding:0 16px}
+.acards{display:flex;gap:8px}
+.acard{position:relative;flex:1;aspect-ratio:3/4;border-radius:22px;overflow:hidden;min-width:0}
+.acard .ph{inset:0}
+.acard strong{position:absolute;z-index:2;left:12px;top:10px;font:400 22px/1 var(--serif)}
+.acard small{position:absolute;z-index:2;left:12px;top:40px;font-size:11px;color:#fffc;display:flex;gap:4px;align-items:center}
+.acard .go{position:absolute;z-index:2;left:50%;bottom:12px;translate:-50% 0;width:52px;height:38px;border-radius:12px;background:#000;display:grid;place-items:center;font-size:17px}
+.albrow{margin-top:20px}
+.albrow header{position:static;display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.albrow h6{font:400 22px var(--serif);margin:0}.albrow time{font-size:11px;color:#fff6}
+.tilts{display:flex}
+.tilts .ph{position:relative;flex:1;aspect-ratio:3/4.2;border-radius:12px;margin-right:-6px;rotate:var(--r,-3deg)}
+.tilts .ph.more::after{opacity:.2}
+.tilts .ph.more{filter:blur(2.5px)}
+.tilts .ph.more b{position:absolute;z-index:2;inset:0;display:grid;place-items:center;font:500 13px var(--sans);color:#fffd}
 
-/* CTA + Footer */
-.final{text-align:center}
-.final form{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:36px}
-.final input{padding:16px 22px;border-radius:999px;border:1px solid #fff3;background:#161616;color:#fff;font:inherit;min-width:min(100%,320px)}
-.final small{display:block;margin-top:16px;color:var(--muted)}
-#formmsg{color:var(--accent);margin-top:14px;min-height:1.4em}
-footer{border-top:1px solid #fff1;padding:48px 0;color:var(--muted);font-size:14px}
-footer .row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
-footer nav{display:flex;gap:24px;flex-wrap:wrap}
+/* ---------- Hero ---------- */
+.hero{padding:150px 0 90px;position:relative}
+.hero h1{grid-area:h;position:relative;z-index:2;font-size:clamp(46px,6.6vw,92px)}
+.hero .lead{font-size:18px;color:var(--muted);max-width:42ch;margin:0 0 32px}
+.hero .grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr);grid-template-areas:"h h" "t p";column-gap:40px;row-gap:34px;align-items:start}
+.hero .txt{grid-area:t}
+.hero .phones{grid-area:p;margin-top:-30px}
+.qrbox{margin-top:72px;display:inline-flex;flex-direction:column;align-items:center;gap:12px;padding:20px 24px;border-radius:24px;background:var(--surface);width:236px;text-align:center}
+.qrbox .tag{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#fff9}
+.qrbox .q{width:128px;height:128px;border-radius:10px;background:#fff;padding:10px}
+.qrbox .q i{display:block;height:100%;background:conic-gradient(from 90deg,#000 0 25%,#fff 0 50%,#000 0 75%,#fff 0) 0 0/12px 12px}
+.qrbox small{color:var(--muted);line-height:1.45;font-size:12.5px}
+.phones{position:relative;height:640px}
+.phones .phone{position:absolute}
+.phones .a{left:4%;top:0;rotate:-2deg}
+.phones .b{right:0;top:70px;rotate:2deg}
+@media(max-width:1000px){
+  .hero .grid{grid-template-columns:1fr;grid-template-areas:"h" "t" "p"}
+  .qrbox{display:none}
+  .hero .phones{height:560px;margin-top:20px}
+  .phones .phone{width:min(54vw,270px)}
+  .phones .a{left:0}
+}
 
-/* Bewegung nur wenn erlaubt */
-[data-motion="enabled"] .reveal{opacity:0;translate:0 28px;transition:opacity .8s ease,translate .8s ease}
+/* ---------- Versprechen ---------- */
+.proof h2{max-width:14ch}
+.facts{display:flex;gap:56px;flex-wrap:wrap;margin:48px 0 20px;align-items:flex-end}
+.stars{display:flex;gap:6px;color:#fff;font-size:18px;margin-bottom:12px}
+.stars svg{fill:currentColor;stroke:none}
+.fact b{display:block;font:400 54px/1 var(--serif);font-style:italic}
+.fact span{display:block;margin-top:10px;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:48px;margin-top:64px}
+.cards3 h3{font-size:26px;font-style:italic;margin-bottom:14px}
+.cards3 p{color:var(--muted);margin:0}
+.note{margin-top:40px;font-size:13px;color:#fff7;max-width:70ch}
+@media(max-width:900px){.cards3{grid-template-columns:1fr;gap:32px}.facts{gap:32px}}
+
+/* ---------- Anlässe ---------- */
+.cases{text-align:center;padding-bottom:60px}
+.cases .eyebrow{margin-bottom:26px}
+.quote{font:400 clamp(34px,4.8vw,64px)/1.03 var(--serif);max-width:19ch;margin:0 auto;min-height:2.1em;transition:opacity .3s,translate .3s}
+.quote.out{opacity:0;translate:0 8px}
+.tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:40px 0 20px}
+.tab{display:inline-flex;gap:8px;align-items:center;padding:10px 18px;border-radius:12px;border:1px solid #fff2;background:#ffffff08;color:#fffb;font:500 14px var(--sans);cursor:pointer;transition:.25s}
+.tab:hover{background:#ffffff14}
+.tab[aria-selected="true"]{background:#fff;color:#0d0d0d;border-color:#fff}
+.stage{display:flex;justify-content:center;align-items:flex-start;gap:28px;margin-top:40px}
+.stage .phone{width:min(36vw,290px);transition:opacity .4s}
+.stage .phone:nth-child(2){margin-top:44px;width:min(34vw,274px)}
+.stage.swap .phone{opacity:.25}
+
+/* ---------- Ablauf ---------- */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:56px;margin-top:70px}
+.step .phone{width:100%;max-width:300px;margin:0 auto 34px;aspect-ratio:9/16;-webkit-mask-image:linear-gradient(#000 78%,transparent);mask-image:linear-gradient(#000 78%,transparent);border-bottom:0;border-radius:46px 46px 0 0}
+.step .num{font-size:14px;letter-spacing:.3em;color:#fff9;margin-bottom:12px}
+.step h3{font-style:italic;font-size:36px;margin-bottom:12px}
+.step p{color:var(--muted);margin:0;max-width:34ch}
+@media(max-width:900px){.steps{grid-template-columns:1fr;gap:64px}}
+
+/* ---------- FAQ ---------- */
+.faq .list{margin-top:48px}
+.faq details{border-top:1px solid var(--line)}
+.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{display:flex;align-items:center;gap:18px;padding:24px 16px;cursor:pointer;list-style:none;font-size:19px;color:#ffffffdd;transition:background .2s,color .2s;border-radius:14px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:hover{background:#ffffff08;color:#fff}
+.faq .ic{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);background:#ffffff0a;display:grid;place-items:center;font-size:16px;color:#fff9;flex:none}
+.faq summary .ch{margin-left:auto;font-size:18px;color:#fff8;transition:rotate .25s}
+.faq details[open] summary .ch{rotate:90deg}
+.faq details[open] summary{color:#fff}
+.faq .ans{padding:0 16px 28px 70px;color:var(--muted);max-width:78ch}
+.faq .ans p{margin:0 0 10px}
+@media(max-width:600px){.faq summary{font-size:17px;padding:20px 8px}.faq .ans{padding:0 8px 24px}}
+
+/* ---------- Abschluss ---------- */
+.final{text-align:center;padding-bottom:40px}
+.final h2{font-size:clamp(42px,6vw,76px)}
+.final .btn{margin-top:34px}
+.final .stage{margin-top:70px;gap:clamp(12px,3vw,40px);justify-content:center;-webkit-mask-image:linear-gradient(#000 70%,transparent);mask-image:linear-gradient(#000 70%,transparent)}
+.final .stage .phone{width:min(42vw,340px)}
+.final .stage .phone:nth-child(2){margin-top:0;width:min(42vw,340px)}
+.final .mini{font-size:13px;color:var(--muted);margin-top:18px}
+
+/* ---------- Footer ---------- */
+footer{border-top:1px solid var(--line);padding:80px 0 40px;margin-top:40px}
+.fgrid{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:40px}
+.fgrid .logo{margin:0 0 14px}
+.fgrid p{color:var(--muted);font-size:14px;max-width:30ch;margin:0}
+.fgrid h4{margin:0 0 16px;font:500 12px var(--sans);letter-spacing:.22em;text-transform:uppercase;color:#fff9}
+.fgrid ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.fgrid li a{color:var(--muted);text-decoration:none;font-size:14.5px}
+.fgrid li a:hover{color:#fff}
+.fbot{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:60px;padding-top:24px;border-top:1px solid var(--line);color:#fff7;font-size:13px}
+@media(max-width:900px){.fgrid{grid-template-columns:1fr 1fr}.fgrid>div:first-child{grid-column:1/-1}}
+
+/* ---------- Bewegung ---------- */
+[data-motion="enabled"] .reveal{opacity:0;translate:0 30px;transition:opacity .9s cubic-bezier(.2,.7,.2,1),translate .9s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
 [data-motion="enabled"] .reveal.in{opacity:1;translate:0 0}
-[data-motion="enabled"] .phone.a{animation:float 7s ease-in-out infinite}
-[data-motion="enabled"] .phone.b{animation:float 8s ease-in-out -2s infinite}
-@keyframes float{50%{translate:0 -14px}}
+[data-motion="enabled"] .phones .a{animation:fl 8s ease-in-out infinite}
+[data-motion="enabled"] .phones .b{animation:fl 9s ease-in-out -3s infinite}
+@keyframes fl{50%{translate:0 -14px}}
+@supports (animation-timeline:view()){
+  [data-motion="enabled"] .step .phone{animation:rise linear both;animation-timeline:view();animation-range:entry 0% cover 40%}
+  @keyframes rise{from{translate:0 60px;opacity:.2}to{translate:0 0;opacity:1}}
+  [data-motion="enabled"] .final .stage .phone:nth-child(1){animation:pl linear both;animation-timeline:view();animation-range:entry 10% cover 55%}
+  [data-motion="enabled"] .final .stage .phone:nth-child(2){animation:pr linear both;animation-timeline:view();animation-range:entry 10% cover 55%}
+  @keyframes pl{from{translate:60px 70px;rotate:3deg}to{translate:0 0;rotate:0deg}}
+  @keyframes pr{from{translate:-60px 120px;rotate:-3deg}to{translate:0 0;rotate:0deg}}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 <script>if(!matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.dataset.motion="enabled";</script>
 </head>
 <body>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-cam" viewBox="0 0 24 24"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+    <symbol id="i-qr" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3m4 0v4h-4m-3 0v-3"/></symbol>
+    <symbol id="i-dl" viewBox="0 0 24 24"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5m0 0 6-6m-6 6 6 6"/></symbol>
+    <symbol id="i-next" viewBox="0 0 24 24"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></symbol>
+    <symbol id="i-flash" viewBox="0 0 24 24"><path d="M13 3 5 13h6l-1 8 8-10h-6z"/></symbol>
+    <symbol id="i-flip" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14-4M4 4v4h4M4 13a8 8 0 0 0 14 4m2 3v-4h-4"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.600-7 10-7 10z"/></symbol>
+    <symbol id="i-cake" viewBox="0 0 24 24"><path d="M4 20h16v-7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2zM4 16c2 1.500 4 1.500 6 0s4-1.500 6 0 3 1 4 0M12 11V7m0-1.500c-1-1 0-2 0-3 1 1 0 2 0 3"/></symbol>
+    <symbol id="i-plane" viewBox="0 0 24 24"><path d="m21 3-9 18-2-8-8-2z"/></symbol>
+    <symbol id="i-glass" viewBox="0 0 24 24"><path d="M8 3h8l-1 7a3 3 0 0 1-6 0zM12 13v8m-4 0h8"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.500 1.500M17.500 17.500 19 19M5 19l1.500-1.500M17.500 6.500 19 5"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.700 0l3-3a4 4 0 0 0-5.700-5.700l-1 1M14 10a4 4 0 0 0-5.700 0l-3 3a4 4 0 0 0 5.700 5.700l1-1"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 2 2.900 6.300 6.800.7-5.100 4.600 1.500 6.700L12 17l-6.100 3.300 1.500-6.700L2.300 9l6.800-.7z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2.500"/><path d="M11 18h2"/></symbol>
+    <symbol id="i-film" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M17 4v16M3 9h4M3 15h4M17 9h4M17 15h4"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.500"/><path d="M2.500 20a6.500 6.500 0 0 1 13 0M16 4.500a3.500 3.500 0 0 1 0 7M18 14.500a6.500 6.500 0 0 1 3.500 5.500"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 5 3 8.500 7 10 4-1.500 7-5 7-10V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3v5m0 8v5M3 12h5m8 0h5M6 6l3 3m6 6 3 3M18 6l-3 3m-6 6-3 3"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  </defs>
+</svg>
+
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
 <header>
   <div class="nav">
-    <a class="logo" href="#top">Knips<span>.</span></a>
-    <ul>
+    <a class="logo" href="#top" aria-label="Knips Startseite"><b></b>Knips</a>
+    <ul class="menu">
       <li><a href="#ablauf">So funktioniert's</a></li>
-      <li><a href="#anlaesse">Anlässe</a></li>
-      <li><a href="#datenschutz">Datenschutz</a></li>
+      <li><a href="#vorteile">Vorteile</a></li>
+      <li><a href="#faq">Preise</a></li>
+      <li>
+        <button class="dd" type="button" aria-haspopup="true">Anlässe <svg class="i"><use href="#i-down"/></svg></button>
+        <ul class="sub">
+          <li><a href="#anlaesse" data-tab="0">Für Hochzeiten</a></li>
+          <li><a href="#anlaesse" data-tab="3">Für Partys</a></li>
+          <li><a href="#anlaesse" data-tab="1">Für Geburtstage</a></li>
+          <li><a href="#anlaesse" data-tab="2">Für Reisen</a></li>
+        </ul>
+      </li>
       <li><a href="#faq">FAQ</a></li>
     </ul>
     <a class="btn" href="#warteliste">Warteliste</a>
+    <button class="burger" id="burger" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="drawer"><svg class="i"><use href="#i-menu"/></svg></button>
   </div>
+  <nav class="drawer" id="drawer" aria-label="Mobile Navigation">
+    <a href="#ablauf">So funktioniert's</a>
+    <a href="#vorteile">Vorteile</a>
+    <a href="#anlaesse">Anlässe</a>
+    <a href="#faq">FAQ</a>
+    <a class="btn" href="#warteliste">Auf die Warteliste</a>
+  </nav>
 </header>
 
-<main id="top">
+<main id="inhalt">
 
-<section class="hero">
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
   <div class="wrap grid">
-    <div>
-      <h1>Euer Tag,<br><em>durch alle Augen.</em></h1>
-      <p class="lead">Knips ist die private Einwegkamera für Hochzeiten, Geburtstage und Feiern. Gäste scannen einen QR Code, ohne App Download, und knipsen drauflos. Das Album öffnet sich erst nach dem Fest.</p>
-      <div class="hero-actions">
-        <a class="btn" href="#warteliste">Auf die Warteliste</a>
+    <h1 class="reveal">Euer Tag, <em>durch alle Augen.</em></h1>
+    <div class="txt">
+      <p class="lead reveal" style="--d:.1s">Knips ist die private Einwegkamera für Hochzeiten, Geburtstage und Feiern. Gäste scannen einen QR Code, ohne App Download, und knipsen drauflos. Das Album öffnet sich erst nach dem Fest.</p>
+      <div class="reveal" style="--d:.2s;display:flex;gap:14px;flex-wrap:wrap">
+        <a class="btn" href="#warteliste">Auf die Warteliste <svg class="i"><use href="#i-next"/></svg></a>
         <a class="btn ghost" href="#ablauf">So funktioniert's</a>
       </div>
-      <div class="qrbox">
-        <div class="qr" role="img" aria-label="Platzhalter für QR Code"></div>
-        <div><strong>Kamera ausprobieren</strong><small>Platzhalter. Hier folgt der echte Code zur Demo.</small></div>
+      <div class="qrbox reveal" style="--d:.3s">
+        <span class="tag">✱ Kamera testen</span>
+        <div class="q" role="img" aria-label="Platzhalter für den Demo QR Code"><i></i></div>
+        <small>Platzhalter. Hier steht später der Code zur Demo Kamera. Ohne Download.</small>
       </div>
     </div>
+
     <div class="phones" aria-hidden="true">
-      <div class="phone a">
-        <div class="cover"><h4>Lena &amp; Jonas<br>Hochzeit</h4>
-          <div class="stats"><div>412<small>Momente</small></div><div>1 T 23 Std<small>Verbleibend</small></div><div>86<small>Gäste</small></div></div></div>
-        <div class="gallery"><i class="g1"></i><i class="g2"></i><i class="g3"></i><i class="g4"></i></div>
-      </div>
-      <div class="phone b">
-        <div class="topbar">Lena &amp; Jonas Hoch…<small>noch 1 T 23 Std</small></div>
-        <div class="viewfinder"></div>
-        <div class="counter">24</div><div class="shutter"></div>
-      </div>
+      <div class="phone a"><div class="scr">
+        <div class="ph cover"><div class="t">Lena &amp; Jonas<br>Hochzeit</div>
+          <div class="stats"><div>412<small>Momente</small></div><div>1 T 23 Std<small>Verbleibend</small></div><div>86 ›<small>Gäste</small></div></div></div>
+        <div class="actions"><div class="cam"><svg class="i"><use href="#i-cam"/></svg></div><div class="sq"><svg class="i"><use href="#i-qr"/></svg></div><div class="sq"><svg class="i"><use href="#i-dl"/></svg></div></div>
+        <div class="grid4">
+          <div class="ph" style="--g:linear-gradient(150deg,#dcab96,#4f2e2b);--x:30%;--y:25%"><span>Mia S.</span></div>
+          <div class="ph" style="--g:linear-gradient(150deg,#b5c3a8,#2e4234);--x:60%;--y:30%"><span>Tom K.</span></div>
+          <div class="ph" style="--g:linear-gradient(150deg,#ecd8ad,#7c5b2d);--x:40%;--y:60%"></div>
+          <div class="ph" style="--g:linear-gradient(150deg,#9db3cf,#27364d);--x:55%;--y:40%"></div>
+        </div></div></div>
+      <div class="phone b"><div class="scr">
+        <div class="bar"><div class="b"><svg class="i"><use href="#i-back"/></svg></div><div class="ttl">Lena &amp; Jonas Hoch…<small>noch 1 T 23 Std</small></div><div class="b"><svg class="i"><use href="#i-qr"/></svg></div></div>
+        <div class="ph vf"></div>
+        <div class="ctl"><svg class="i"><use href="#i-flash"/></svg><div class="zoom"><span>0,5</span><span class="on">1,2×</span></div><svg class="i"><use href="#i-flip"/></svg></div>
+        <div class="bot"><div class="cnt">24</div><div class="shut"></div><div class="ph thumb"></div></div>
+      </div></div>
     </div>
   </div>
 </section>
 
-<section id="vorteile">
+<!-- ================= VORTEILE ================= -->
+<section class="proof" id="vorteile">
   <div class="wrap">
-    <p class="eyebrow reveal">Warum Knips</p>
-    <h2 class="reveal">Erinnerungen, die ihr<br><em>nie gesehen habt.</em></h2>
-    <div class="benefits">
-      <div class="benefit reveal"><div class="num">01</div><h3>Ohne Download</h3><p>Gäste scannen den QR Code am Eingang und sind in Sekunden dabei. Auch Oma.</p></div>
-      <div class="benefit reveal"><div class="num">02</div><h3>Verzögerte Freigabe</h3><p>Niemand schaut während der Feier aufs Handy. Die Fotos erscheinen erst, wenn ihr es festlegt.</p></div>
-      <div class="benefit reveal"><div class="num">03</div><h3>Alle Perspektiven</h3><p>Ein Album, 80 Blickwinkel. Ihr seht die Feier, die ihr selbst nie sehen konntet.</p></div>
+    <h2 class="reveal">Erinnerungen, die ihr <em>nie gesehen habt.</em></h2>
+    <div class="facts reveal">
+      <div><div class="stars" aria-hidden="true"><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg></div></div>
+      <div class="fact"><b>0</b><span>Downloads für Gäste</span></div>
+      <div class="fact"><b>24</b><span>Bilder pro Gast</span></div>
+      <div class="fact"><b>1</b><span>Album für alle</span></div>
+    </div>
+    <p class="note reveal">Die Zahlen oben beschreiben das Produkt, nicht Kundenerfolge. Echte Bewertungen und Eventzahlen folgen erst nach dem Start.</p>
+    <div class="cards3">
+      <div class="reveal"><h3>Niemand schaut aufs Display</h3><p>Weil das Album erst nach dem Fest aufgeht, seid ihr mittendrin statt am Handy. Die Spannung kommt von selbst.</p></div>
+      <div class="reveal" style="--d:.1s"><h3>Auch Oma knipst mit</h3><p>Ein Scan am Eingang genügt. Kein Konto, keine App, kein Passwort. Wer ein Smartphone hat, ist dabei.</p></div>
+      <div class="reveal" style="--d:.2s"><h3>Blickwinkel, die fehlen</h3><p>Der Fotograf sieht das Brautpaar. Eure Gäste sehen den Tanz, die Tränen und den Hund unterm Tisch.</p></div>
     </div>
   </div>
 </section>
 
-<section id="anlaesse" class="cases">
+<!-- ================= ANLÄSSE ================= -->
+<section class="cases" id="anlaesse">
   <div class="wrap">
     <p class="eyebrow reveal">Anlässe</p>
-    <p id="quote" class="quote" aria-live="polite">„Eure Gäste haben Momente festgehalten, die ihr nie gesehen habt.“</p>
+    <p class="quote" id="quote" aria-live="polite"></p>
     <div class="tabs" role="tablist" aria-label="Anlässe">
-      <button class="tab" role="tab" aria-selected="true" data-i="0">Hochzeit</button>
-      <button class="tab" role="tab" aria-selected="false" data-i="1">Geburtstag</button>
-      <button class="tab" role="tab" aria-selected="false" data-i="2">Reise</button>
-      <button class="tab" role="tab" aria-selected="false" data-i="3">Party</button>
-      <button class="tab" role="tab" aria-selected="false" data-i="4">Alltag</button>
+      <button class="tab" role="tab" aria-selected="true" data-i="0"><svg class="i"><use href="#i-heart"/></svg>Hochzeit</button>
+      <button class="tab" role="tab" aria-selected="false" data-i="1"><svg class="i"><use href="#i-cake"/></svg>Geburtstag</button>
+      <button class="tab" role="tab" aria-selected="false" data-i="2"><svg class="i"><use href="#i-plane"/></svg>Reise</button>
+      <button class="tab" role="tab" aria-selected="false" data-i="3"><svg class="i"><use href="#i-glass"/></svg>Party</button>
+      <button class="tab" role="tab" aria-selected="false" data-i="4"><svg class="i"><use href="#i-sun"/></svg>Alltag</button>
     </div>
-    <div class="case-stage" aria-hidden="true"><div class="card" id="c1"></div><div class="card" id="c2"></div></div>
+    <div class="stage" id="stage" aria-hidden="true">
+      <div class="phone"><div class="scr">
+        <div class="ph cover" id="cvA"><div class="t" id="cvT">Lena &amp; Jonas<br>Hochzeit</div>
+          <div class="stats"><div>412<small>Momente</small></div><div>1 T 23 Std<small>Verbleibend</small></div><div>86 ›<small>Gäste</small></div></div></div>
+        <div class="actions"><div class="cam"><svg class="i"><use href="#i-cam"/></svg></div><div class="sq"><svg class="i"><use href="#i-qr"/></svg></div><div class="sq"><svg class="i"><use href="#i-dl"/></svg></div></div>
+        <div class="grid4">
+          <div class="ph g1"></div><div class="ph g2"></div><div class="ph g3"></div><div class="ph g4"></div>
+        </div></div></div>
+      <div class="phone"><div class="scr">
+        <div class="bar"><div class="b"><svg class="i"><use href="#i-back"/></svg></div><div class="ttl" id="vfT">Lena &amp; Jonas Hoch…<small>noch 1 T 23 Std</small></div><div class="b"><svg class="i"><use href="#i-qr"/></svg></div></div>
+        <div class="ph vf" id="vfB"></div>
+        <div class="ctl"><svg class="i"><use href="#i-flash"/></svg><div class="zoom"><span>0,5</span><span class="on">1,2×</span></div><svg class="i"><use href="#i-flip"/></svg></div>
+        <div class="bot"><div class="cnt">24</div><div class="shut"></div><div class="ph thumb"></div></div>
+      </div></div>
+    </div>
   </div>
 </section>
 
+<!-- ================= ABLAUF ================= -->
 <section id="ablauf">
   <div class="wrap">
     <p class="eyebrow reveal">So funktioniert's</p>
-    <h2 class="reveal">Wie aus einem Tag<br><em>ein Film wird.</em></h2>
+    <h2 class="reveal">Wie aus einem Tag <em>ein Film wird.</em></h2>
     <div class="steps">
-      <div class="step reveal"><div class="shot"><span>1</span></div><h3>Album anlegen</h3><p>Gebt dem Event einen Namen, wählt Titelbild und legt fest, wann die Fotos sichtbar werden.</p></div>
-      <div class="step reveal"><div class="shot"><span>2</span></div><h3>Gäste einladen</h3><p>QR Code drucken oder per Link teilen. Ein Scan genügt, kein Konto und keine App nötig.</p></div>
-      <div class="step reveal"><div class="shot"><span>3</span></div><h3>Gemeinsam knipsen</h3><p>Jeder Gast hat seine Einwegkamera mit begrenzter Aufnahmezahl. Das Ergebnis seht ihr nach dem Fest.</p></div>
+      <div class="step">
+        <div class="phone" aria-hidden="true"><div class="scr">
+          <div class="strip"><div class="ph" style="--g:linear-gradient(150deg,#5f7a6c,#1b2a24)"></div><div class="ph" style="--g:linear-gradient(150deg,#c9a77b,#4a361b)"></div></div>
+          <div class="sheet" style="top:34%;inset:auto 0 0">
+            <span class="addcover"><svg class="i"><use href="#i-cam"/></svg> Titelbild</span>
+            <h5 style="margin-top:16px;font-size:26px">Wie soll euer Film heißen?</h5>
+            <div class="field">z. B. Silvester bei Oma</div>
+            <div class="row2"><div class="dots"><i class="on"></i><i></i><i></i><i></i><i></i></div><span class="next">Weiter <svg class="i"><use href="#i-next"/></svg></span></div>
+          </div></div></div>
+        <div class="num reveal">01</div><h3 class="reveal">Film anlegen</h3>
+        <p class="reveal">Gebt dem Event einen Namen, legt fest, wie lange die Kamera offen bleibt und wann die Fotos sichtbar werden.</p>
+      </div>
+      <div class="step">
+        <div class="phone" aria-hidden="true"><div class="scr">
+          <div class="strip" style="opacity:.8"><div class="ph" style="--g:linear-gradient(150deg,#6c5a7a,#1d1626)"></div><div class="ph" style="--g:linear-gradient(150deg,#c98a7b,#4a231b)"></div></div>
+          <div class="sheet" style="inset:auto 0 0">
+            <h5>Gemeinsam knipsen</h5><p>Lasst andere euren Tag durch ihre Linse sehen.</p>
+            <div class="qrimg"><i></i></div>
+            <div class="chips"><span><svg class="i"><use href="#i-link"/></svg> Link teilen</span><span><svg class="i"><use href="#i-dl"/></svg> QR speichern</span></div>
+          </div></div></div>
+        <div class="num reveal">02</div><h3 class="reveal">Gäste einladen</h3>
+        <p class="reveal">QR Code drucken oder Link verschicken. Ein Scan reicht, ein Konto braucht niemand.</p>
+      </div>
+      <div class="step">
+        <div class="phone" aria-hidden="true"><div class="scr">
+          <div class="ph vf" style="inset:40px 0 128px;border-radius:0;--g:linear-gradient(170deg,#3f5a60,#0f1618 70%)"></div>
+          <div class="ph" style="--g:linear-gradient(150deg,#dcab96,#4f2e2b);position:absolute;left:14px;top:60px;width:92px;height:116px;border-radius:14px;rotate:-6deg;z-index:3;box-shadow:0 14px 30px #0008"></div>
+          <div class="ph" style="--g:linear-gradient(150deg,#ecd8ad,#7c5b2d);position:absolute;right:12px;top:200px;width:96px;height:120px;border-radius:14px;rotate:6deg;z-index:3;box-shadow:0 14px 30px #0008"></div>
+          <div class="ctl" style="bottom:100px"><svg class="i"><use href="#i-flash"/></svg><div class="zoom"><span>0,5</span><span class="on">1,2×</span></div><svg class="i"><use href="#i-flip"/></svg></div>
+          <div class="bot"><div class="cnt">17</div><div class="shut"></div><div class="ph thumb" style="--g:linear-gradient(150deg,#e8a87c,#6b3b22)"></div></div>
+        </div></div>
+        <div class="num reveal">03</div><h3 class="reveal">Gemeinsam knipsen</h3>
+        <p class="reveal">Jeder Schnappschuss füllt eure gemeinsame Filmrolle. Entwickelt wird erst, wenn das Fest vorbei ist.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<section id="datenschutz">
+<!-- ================= FAQ ================= -->
+<section class="faq" id="faq">
   <div class="wrap">
-    <div class="privacy reveal">
-      <p class="eyebrow">Datenschutz</p>
-      <h2>Eure Fotos gehören <em>euch.</em></h2>
-      <ul>
-        <li>Server in der EU (Ziel, vor Start verbindlich festlegen)</li>
-        <li>Gäste stimmen vor dem ersten Foto ausdrücklich zu</li>
-        <li>Album nur per Link für eure Gäste sichtbar</li>
-        <li>Ihr bestimmt, wann Fotos gelöscht werden</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section id="faq" class="faq">
-  <div class="wrap">
+    <p class="eyebrow reveal">FAQ</p>
     <h2 class="reveal">Häufige Fragen</h2>
-    <div style="margin-top:40px">
-      <details><summary>Müssen Gäste eine App installieren?</summary><p>Nein. Der QR Code öffnet die Kamera direkt im Browser.</p></details>
-      <details><summary>Wann sehen wir die Fotos?</summary><p>Ihr legt den Zeitpunkt selbst fest, zum Beispiel am Morgen nach der Feier.</p></details>
-      <details><summary>Wie viele Fotos darf jeder Gast machen?</summary><p>Das stellt ihr beim Anlegen ein, wie bei einer echten Einwegkamera.</p></details>
-      <details><summary>Was kostet Knips?</summary><p>Die Preise stehen noch nicht fest. Tragt euch in die Warteliste ein, dann erfahrt ihr es als Erste.</p></details>
-      <details><summary>Wie steht es um den Datenschutz?</summary><p>Fotos von Gästen sind personenbezogene Daten. Wir hosten in der EU und holen vor dem ersten Foto die Einwilligung ein.</p></details>
+    <div class="list">
+      <details><summary><span class="ic"><svg class="i"><use href="#i-cam"/></svg></span>Was ist Knips und wie funktioniert es?<svg class="i ch"><use href="#i-chev"/></svg></summary><div class="ans"><p>Knips ist eine digitale Einwegkamera für Events. Ihr legt einen Film an, teilt einen QR Code, und eure Gäste machen Fotos mit begrenzter Anzahl. Das Album öffnet sich erst zum Zeitpunkt, den ihr festlegt.</p></div></details>
+      <details><summary><span class="ic"><svg class="i"><use href="#i-phone"/></svg></span>Brauchen Gäste iPhone oder Android?<svg class="i ch"><use href="#i-chev"/></svg></summary><div class="ans"><p>Beides funktioniert. Die Kamera läuft im Browser des Smartphones, eine App ist nicht nötig.</p></div></details>
+      <details><summary><span class="ic"><svg class="i"><use href="#i-film"/></svg></span>Wie lege ich einen Film an?<svg class="i ch"><use href="#i-chev"/></svg></summary><div class="ans"><p>Namen vergeben, Dauer und Freigabezeitpunkt wählen, optional ein Titelbild hinzufügen. Danach erhaltet ihr QR Code und Link.</p></div></details>
+      <details><summary><span class="ic"><svg class="i"><use href="#i-users"/></svg></span>Können Gäste ohne Konto mitmachen?<svg class="i ch"><use href="#i-chev"/></svg></summary><div class="ans"><p>Ja. Ein Scan genügt, ein Name ist optional.</p></div></details>
+      <details><summary><span class="ic"><svg class="i"><use href="#i-lock"/></svg></span>Wer sieht die Fotos?<svg class="i ch"><use href="#i-chev"/></svg></summary><div class="ans"><p>Nur Personen mit dem Link zu eurem Film. Ihr entscheidet, ob Gäste das Album nach der Freigabe ebenfalls sehen dürfen.</p></div></details>
+      <details><summary><span class="ic"><svg class="i"><use href="#i-clock"/></svg></span>Wann werden die Fotos „entwickelt“?<svg class="i ch"><use href="#i-chev"/></svg></summary><div class="ans"><p>Zu dem Zeitpunkt, den ihr beim Anlegen festlegt, zum Beispiel am Morgen nach dem Fest.</p></div></details>
+      <details><summary><span class="ic"><svg class="i"><use href="#i-dl"/></svg></span>Kann ich die Fotos herunterladen?<svg class="i ch"><use href="#i-chev"/></svg></summary><div class="ans"><p>Ja, in voller Qualität, sobald der Film entwickelt ist.</p></div></details>
+      <details><summary><span class="ic"><svg class="i"><use href="#i-shield"/></svg></span>Wie geht Knips mit Datenschutz um?<svg class="i ch"><use href="#i-chev"/></svg></summary><div class="ans"><p>Fotos von Gästen sind personenbezogene Daten. Ziel sind Server in der EU und eine ausdrückliche Einwilligung vor dem ersten Foto. Das wird vor dem Start verbindlich festgelegt.</p></div></details>
+      <details><summary><span class="ic"><svg class="i"><use href="#i-star"/></svg></span>Was kostet Knips?<svg class="i ch"><use href="#i-chev"/></svg></summary><div class="ans"><p>Die Preise stehen noch nicht fest. Wer sich auf die Warteliste einträgt, erfährt sie als Erste.</p></div></details>
+      <details><summary><span class="ic"><svg class="i"><use href="#i-spark"/></svg></span>Warum heißt es Knips?<svg class="i ch"><use href="#i-chev"/></svg></summary><div class="ans"><p>So klingt der Auslöser einer Kamera, kurz und ohne Umstände. Genau so soll sich die App anfühlen.</p></div></details>
     </div>
   </div>
 </section>
 
-<section id="warteliste" class="final">
+<!-- ================= ABSCHLUSS ================= -->
+<section class="final" id="warteliste">
   <div class="wrap">
-    <h2 class="reveal">Das Leben passiert <em>einmal.</em><br>Haltet es fest.</h2>
-    <form id="wl" novalidate>
-      <input type="email" name="email" placeholder="Eure E Mail Adresse" aria-label="E Mail Adresse" required>
+    <h2 class="reveal">Das Leben passiert einmal.<br><em>Haltet es fest.</em></h2>
+    <a class="btn accent reveal" href="#warteliste-form" id="cta">Event anlegen <svg class="i"><use href="#i-next"/></svg></a>
+    <form id="wl" class="reveal" novalidate style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px">
+      <label for="mail" style="position:absolute;left:-9999px">E Mail Adresse</label>
+      <input id="mail" type="email" name="email" placeholder="Eure E Mail Adresse" required style="padding:16px 22px;border-radius:999px;border:1px solid #fff3;background:#161616;color:#fff;font:inherit;min-width:min(100%,320px)">
       <button class="btn" type="submit">Auf die Warteliste</button>
     </form>
-    <small>Mit dem Eintrag stimmt ihr der Speicherung eurer E Mail zu. Abmeldung jederzeit.</small>
-    <div id="formmsg" role="status"></div>
+    <div id="formmsg" class="mini" role="status" style="min-height:1.5em;color:var(--accent)">Mit dem Eintrag stimmt ihr der Speicherung eurer E Mail zu. Abmeldung jederzeit.</div>
+
+    <div class="stage" aria-hidden="true">
+      <div class="phone"><div class="scr">
+        <div class="act">
+          <p class="lbl">Aktiv</p>
+          <div class="acards">
+            <div class="acard"><div class="ph" style="--g:linear-gradient(160deg,#c9a98f,#3b2a24);--x:50%;--y:40%"></div><strong>Familienurlaub</strong><small><svg class="i"><use href="#i-clock"/></svg> noch 2 Std</small><div class="go"><svg class="i"><use href="#i-cam"/></svg></div></div>
+            <div class="acard"><div class="ph" style="--g:linear-gradient(160deg,#9fb2c8,#1f2a3a);--x:60%;--y:45%"></div><strong>Paris 2026</strong><small><svg class="i"><use href="#i-clock"/></svg> noch 3 Tage</small><div class="go"><svg class="i"><use href="#i-cam"/></svg></div></div>
+          </div>
+          <div class="albrow"><p class="lbl">Alben</p><header><h6>Silvester</h6><time>1. Jan. 2026</time></header>
+            <div class="tilts"><div class="ph" style="--g:linear-gradient(150deg,#7fb0d6,#1d3550)"></div><div class="ph" style="--g:linear-gradient(150deg,#d9b36b,#4a3510);--r:2deg"></div><div class="ph" style="--g:linear-gradient(150deg,#6f9a86,#1b2c25)"></div></div></div>
+        </div></div></div>
+      <div class="phone"><div class="scr">
+        <div class="act">
+          <p class="lbl">Alben</p>
+          <div class="albrow" style="margin-top:0"><header><h6>Weihnachten</h6><time>25. Dez. 2025</time></header>
+            <div class="tilts"><div class="ph" style="--g:linear-gradient(150deg,#d8b49a,#4b2d22)"></div><div class="ph" style="--g:linear-gradient(150deg,#5f8a6b,#17291d);--r:2deg"></div><div class="ph" style="--g:linear-gradient(150deg,#a6bccb,#27394a)"></div><div class="ph more" style="--g:linear-gradient(150deg,#e6c9a0,#5b4122)"><b>+ 12</b></div></div></div>
+          <div class="albrow"><header><h6>Hochzeitsfeier</h6><time>19. Mai 2026</time></header>
+            <div class="tilts"><div class="ph" style="--g:linear-gradient(150deg,#9db98c,#2b4125)"></div><div class="ph" style="--g:linear-gradient(150deg,#e9c690,#6a4a1d);--r:2deg"></div><div class="ph" style="--g:linear-gradient(150deg,#c4d0b4,#3d4a2e)"></div><div class="ph more" style="--g:linear-gradient(150deg,#b7c79d,#3a4a28)"><b>+ 12</b></div></div></div>
+        </div></div></div>
+    </div>
   </div>
 </section>
 
 </main>
 
 <footer>
-  <div class="wrap row">
-    <span>© 2026 Knips</span>
-    <nav><a href="#">Impressum</a><a href="#">Datenschutz</a><a href="#">AGB</a></nav>
+  <div class="wrap">
+    <div class="fgrid">
+      <div><a class="logo" href="#top"><b></b>Knips</a><p>Die private Einwegkamera für alles, was ihr nur einmal erlebt.</p></div>
+      <div><h4>Produkt</h4><ul><li><a href="#ablauf">So funktioniert's</a></li><li><a href="#vorteile">Vorteile</a></li><li><a href="#faq">Preise</a></li></ul></div>
+      <div><h4>Anlässe</h4><ul><li><a href="#anlaesse">Hochzeit</a></li><li><a href="#anlaesse">Geburtstag</a></li><li><a href="#anlaesse">Party</a></li><li><a href="#anlaesse">Firmenfeier</a></li></ul></div>
+      <div><h4>Hilfe</h4><ul><li><a href="#faq">FAQ</a></li><li><a href="#warteliste">Kontakt</a></li></ul></div>
+      <div><h4>Rechtliches</h4><ul><li><a href="#">Impressum</a></li><li><a href="#">Datenschutz</a></li><li><a href="#">AGB</a></li></ul></div>
+    </div>
+    <div class="fbot"><span>© 2026 Knips. Alle Rechte vorbehalten.</span><span>Gemacht in Deutschland</span></div>
   </div>
 </footer>
 
 <script>
 (function(){
+  var $=function(s,c){return (c||document).querySelector(s)}, $$=function(s,c){return [].slice.call((c||document).querySelectorAll(s))};
+
   // Einblenden beim Scrollen
-  var els=document.querySelectorAll('.reveal');
+  var els=$$('.reveal');
   if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.15});
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
     els.forEach(function(el){io.observe(el)});
   }else{els.forEach(function(el){el.classList.add('in')})}
 
-  // Anlass Tabs
-  var data=[
-    ['„Eure Gäste haben Momente festgehalten, die ihr nie gesehen habt.“','linear-gradient(150deg,#d9a38a,#3a2420)','linear-gradient(150deg,#a9b9a0,#1f2e25)'],
-    ['„Derselbe Geburtstag, gesehen durch die Augen jedes Freundes.“','linear-gradient(150deg,#e9d3a6,#5b3f1b)','linear-gradient(150deg,#d98aa0,#3d1b28)'],
-    ['„Ihr wart am selben Ort und habt ihn doch ganz anders erlebt.“','linear-gradient(150deg,#9ab0c9,#1d2b40)','linear-gradient(150deg,#8fcfb0,#1a3a2c)'],
-    ['„Die besten Fotos entstehen, wenn niemand pose macht.“','linear-gradient(150deg,#b48ae0,#251a3d)','linear-gradient(150deg,#f2b987,#3d2412)'],
-    ['„Nicht jeder Film braucht einen besonderen Tag.“','linear-gradient(150deg,#cfcab8,#3a372c)','linear-gradient(150deg,#9ab0c9,#2a3446)']
+  // Mobiles Menü
+  var burger=$('#burger'),drawer=$('#drawer');
+  function closeMenu(){drawer.classList.remove('open');burger.setAttribute('aria-expanded','false');burger.setAttribute('aria-label','Menü öffnen')}
+  burger.addEventListener('click',function(){
+    var o=drawer.classList.toggle('open');
+    burger.setAttribute('aria-expanded',o);burger.setAttribute('aria-label',o?'Menü schließen':'Menü öffnen');
+  });
+  $$('a',drawer).forEach(function(a){a.addEventListener('click',closeMenu)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu()});
+
+  // Anlässe: Zitate, Titel und Farbwelten
+  var cases=[
+    {q:'„Eure Gäste haben Momente festgehalten, die ihr nie gesehen habt.“',t:'Lena &amp; Jonas<br>Hochzeit',c:'linear-gradient(165deg,#3d6a56,#1f352b 55%,#0b0e0c)',v:'linear-gradient(170deg,#524052,#17121c 70%)',g:['#dcab96,#4f2e2b','#b5c3a8,#2e4234','#ecd8ad,#7c5b2d','#9db3cf,#27364d']},
+    {q:'„Derselbe Geburtstag, gesehen durch die Augen jedes Freundes.“',t:'Maries<br>30. Geburtstag',c:'linear-gradient(165deg,#a85a76,#3b1a28 55%,#0e0a0c)',v:'linear-gradient(170deg,#6a4452,#1c1218 70%)',g:['#e6a3b8,#5a2a3a','#f0d49a,#7a5a1e','#c9a0d6,#3d2a52','#9fc6b8,#254038']},
+    {q:'„Ihr wart am selben Ort und habt ihn doch ganz anders erlebt.“',t:'Lissabon<br>Sommer 2026',c:'linear-gradient(165deg,#3e6c91,#1a2f44 55%,#0a0d10)',v:'linear-gradient(170deg,#3f6678,#101a20 70%)',g:['#9ec3e0,#264560','#f1d9a6,#7a5d27','#8fcfb0,#1d4030','#e0a58c,#56302a']},
+    {q:'„Die besten Fotos entstehen, wenn niemand posiert.“',t:'Sommerparty<br>im Garten',c:'linear-gradient(165deg,#6e4a9a,#271a40 55%,#0c0a10)',v:'linear-gradient(170deg,#58427a,#150f20 70%)',g:['#c6a3ea,#3a2560','#f2b987,#6b3b1a','#e98aa7,#51213a','#9fd0e0,#223e4c']},
+    {q:'„Nicht jeder Film braucht einen besonderen Anlass.“',t:'Ein ganz<br>normaler Sonntag',c:'linear-gradient(165deg,#8a8670,#35322a 55%,#0d0d0c)',v:'linear-gradient(170deg,#6d6a5a,#18170f 70%)',g:['#d9d2b8,#4d4836','#a9bcd0,#2d3b4c','#e6b89a,#5a3524','#b5c9a0,#344528']}
   ];
-  var q=document.getElementById('quote'),c1=document.getElementById('c1'),c2=document.getElementById('c2');
-  function show(i){q.style.opacity=0;setTimeout(function(){q.textContent=data[i][0];q.style.opacity=1},200);c1.style.background=data[i][1];c2.style.background=data[i][2]}
-  show(0);
-  document.querySelectorAll('.tab').forEach(function(t){
-    t.addEventListener('click',function(){
-      document.querySelectorAll('.tab').forEach(function(x){x.setAttribute('aria-selected','false')});
-      t.setAttribute('aria-selected','true');show(+t.dataset.i);
+  var q=$('#quote'),stage=$('#stage'),cvA=$('#cvA'),cvT=$('#cvT'),vfB=$('#vfB'),vfT=$('#vfT');
+  var gs=$$('.grid4 .ph',stage);
+  function apply(i){
+    var d=cases[i];
+    cvA.style.setProperty('--g',d.c);vfB.style.setProperty('--g',d.v);
+    cvT.innerHTML=d.t;vfT.innerHTML=d.t.replace('<br>',' ')+'<small>noch 1 T 23 Std</small>';
+    gs.forEach(function(el,k){el.style.setProperty('--g','linear-gradient(150deg,'+d.g[k]+')')});
+  }
+  var cur=-1;
+  function show(i,instant){
+    if(i===cur)return;cur=i;
+    $$('.tab').forEach(function(t){t.setAttribute('aria-selected',String(+t.dataset.i===i))});
+    if(instant){q.textContent=cases[i].q;apply(i);return}
+    q.classList.add('out');stage.classList.add('swap');
+    setTimeout(function(){q.textContent=cases[i].q;apply(i);q.classList.remove('out');stage.classList.remove('swap')},260);
+  }
+  show(0,true);
+  $$('.tab').forEach(function(t,k){
+    t.addEventListener('click',function(){show(+t.dataset.i)});
+    t.addEventListener('keydown',function(e){
+      var n=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(!n)return;
+      var tabs=$$('.tab'),nx=tabs[(k+n+tabs.length)%tabs.length];nx.focus();show(+nx.dataset.i);
     });
   });
+  $$('[data-tab]').forEach(function(a){a.addEventListener('click',function(){show(+a.dataset.tab)})});
 
   // Warteliste: bewusst NICHT angebunden. Kein Versand, keine Speicherung.
-  document.getElementById('wl').addEventListener('submit',function(e){
+  $('#cta').addEventListener('click',function(e){e.preventDefault();$('#mail').focus()});
+  $('#wl').addEventListener('submit',function(e){
     e.preventDefault();
-    var v=this.email.value.trim();
-    document.getElementById('formmsg').textContent=/^\S+@\S+\.\S+$/.test(v)
-      ? 'Demo: Das Formular ist noch nicht angebunden. Es wurde nichts gespeichert.'
-      : 'Bitte eine gültige E Mail Adresse eingeben.';
+    var v=this.email.value.trim(),m=$('#formmsg');
+    m.textContent=/^\S+@\S+\.\S+$/.test(v)
+      ?'Demo: Das Formular ist noch nicht angebunden. Es wurde nichts gespeichert.'
+      :'Bitte eine gültige E Mail Adresse eingeben.';
   });
 })();
 </script>
