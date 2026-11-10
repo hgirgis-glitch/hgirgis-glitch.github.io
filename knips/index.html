@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0d0d0d">
+<title>Knips: Die Einwegkamera für euer Event</title>
+<meta name="description" content="Knips ist die private Einwegkamera für Hochzeiten, Geburtstage und Feiern. Gäste treten per QR Code bei, ohne Download. Das Album öffnet sich erst nach dem Fest.">
+<!-- Arbeitstitel "Knips": Markenrecht vor Veröffentlichung prüfen (DPMA). -->
+<!-- Keine externen Schriften, kein Tracking: DSGVO sicher für den Start. Schrift später selbst hosten. -->
+<style>
+:root{
+  --bg:#0d0d0d; --surface:#1c1c19; --text:#fff; --muted:#aaa79f; --accent:#f2b987;
+  --radius:18px; --content:min(90%,1296px);
+  --serif:"Instrument Serif","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --sans:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{width:var(--content);margin-inline:auto}
+.eyebrow{font-size:14px;letter-spacing:.25em;text-transform:uppercase;color:#fff9;margin:0 0 16px}
+h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.02;margin:0}
+h1{font-size:clamp(44px,7vw,84px)}
+h2{font-size:clamp(36px,5vw,64px)}
+h3{font-size:28px}
+em{font-style:italic}
+section{padding:120px 0}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:16px 26px;border-radius:999px;background:#fff;color:#0d0d0d;font-weight:600;text-decoration:none;border:0;font:inherit;font-weight:600;cursor:pointer;transition:transform .2s,background .2s}
+.btn:hover{transform:translateY(-2px);background:var(--accent)}
+.btn.ghost{background:transparent;color:#fff;border:1px solid #fff4}
+
+/* Header */
+header{position:fixed;inset:12px 0 auto;z-index:10}
+.nav{width:min(94%,1296px);margin-inline:auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 22px;border-radius:999px;background:#1c1c19cc;backdrop-filter:blur(14px);border:1px solid #fff1}
+.logo{font-family:var(--serif);font-size:28px;text-decoration:none}
+.logo span{color:var(--accent)}
+.nav ul{display:flex;gap:30px;list-style:none;margin:0;padding:0}
+.nav a{text-decoration:none}
+.nav ul a{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:#fffc}
+.nav ul a:hover{color:var(--accent)}
+.nav .btn{padding:10px 18px;font-size:14px}
+@media(max-width:860px){.nav ul{display:none}}
+
+/* Hero */
+.hero{padding-top:150px;position:relative;overflow:hidden}
+.hero .grid{display:grid;grid-template-columns:1fr 1.15fr;gap:40px;align-items:center}
+.hero p.lead{font-size:18px;color:var(--muted);max-width:44ch;margin:28px 0 36px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.qrbox{margin-top:48px;display:inline-flex;gap:18px;align-items:center;padding:16px 20px;border-radius:var(--radius);background:var(--surface);max-width:360px}
+.qr{width:84px;height:84px;border-radius:8px;background:
+  conic-gradient(from 90deg at 50% 50%,#fff 0 25%,#0d0d0d 0 50%,#fff 0 75%,#0d0d0d 0) 0 0/14px 14px;flex:none;border:6px solid #fff}
+.qrbox small{color:var(--muted);display:block;line-height:1.4}
+.qrbox strong{display:block;font-size:12px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:4px}
+.phones{position:relative;height:620px}
+.phone{position:absolute;width:290px;aspect-ratio:9/19;border-radius:42px;background:#0b0b0b;border:3px solid #3a3a52;box-shadow:0 30px 80px #0009;overflow:hidden}
+.phone::before{content:"";position:absolute;top:10px;left:50%;translate:-50% 0;width:92px;height:26px;border-radius:99px;background:#000;z-index:3}
+.phone.a{left:6%;top:0;rotate:-3deg}
+.phone.b{right:2%;top:70px;rotate:3deg;width:270px}
+.cover{position:absolute;inset:0 0 38%;background:
+  radial-gradient(circle at 70% 25%,#ffd9a8 0,transparent 40%),linear-gradient(160deg,#355c4a,#1b2a24 60%,#0d0d0d)}
+.cover h4{font-family:var(--serif);font-weight:400;font-size:28px;line-height:1.05;text-align:center;position:absolute;bottom:56px;inset-inline:16px;margin:0}
+.stats{position:absolute;bottom:16px;inset-inline:12px;display:flex;justify-content:space-around;font-family:var(--serif);font-size:20px;text-align:center}
+.stats small{display:block;font:11px var(--sans);color:#ffffffb0}
+.gallery{position:absolute;inset:auto 10px 10px;height:36%;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.gallery i{border-radius:12px;display:block}
+.g1{background:linear-gradient(150deg,#d9a38a,#5a3a35)}
+.g2{background:linear-gradient(150deg,#a9b9a0,#2f4437)}
+.g3{background:linear-gradient(150deg,#e9d3a6,#7b5a2c)}
+.g4{background:linear-gradient(150deg,#9ab0c9,#26354c)}
+.viewfinder{position:absolute;inset:48px 12px 120px;border-radius:24px;background:
+  radial-gradient(circle at 40% 45%,#ffe7bf,transparent 35%),linear-gradient(170deg,#4a3b52,#14111a)}
+.shutter{position:absolute;bottom:34px;left:50%;translate:-50% 0;width:62px;height:62px;border-radius:50%;border:4px solid #fff6;background:#111}
+.counter{position:absolute;bottom:42px;left:22px;font-family:var(--serif);background:#000;border-radius:12px;padding:6px 10px;font-size:18px}
+.topbar{position:absolute;top:44px;inset-inline:18px;text-align:center;font-family:var(--serif);font-size:17px;z-index:2}
+.topbar small{display:block;font:11px var(--sans);color:var(--muted)}
+@media(max-width:900px){
+  .hero .grid{grid-template-columns:1fr}
+  .phones{height:560px}
+  .phone.a{left:0}.phone.b{right:0}
+  .phone{width:min(54vw,260px)}
+  .phone.b{width:min(50vw,240px)}
+  section{padding:80px 0}
+}
+
+/* Vorteile */
+.benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:56px}
+.benefit{padding:32px;border-radius:var(--radius);background:var(--surface)}
+.benefit h3{margin-bottom:12px}
+.benefit p{color:var(--muted);margin:0}
+.benefit .num{font-family:var(--serif);font-size:56px;color:var(--accent);line-height:1}
+@media(max-width:900px){.benefits{grid-template-columns:1fr}}
+
+/* Anlässe */
+.cases{text-align:center}
+.tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:36px 0}
+.tab{padding:10px 18px;border-radius:12px;border:1px solid #fff2;background:transparent;color:#fffb;font:inherit;font-size:14px;cursor:pointer}
+.tab[aria-selected="true"]{background:#fff;color:#0d0d0d}
+.quote{font-family:var(--serif);font-size:clamp(32px,4.4vw,56px);line-height:1.05;max-width:18ch;margin:0 auto;min-height:2.2em;transition:opacity .35s}
+.case-stage{display:flex;justify-content:center;gap:24px;margin-top:48px;perspective:1000px}
+.card{width:min(40vw,260px);aspect-ratio:3/4;border-radius:22px;border:1px solid #fff1;transition:background .5s,transform .5s}
+.card:nth-child(1){rotate:-4deg}.card:nth-child(2){rotate:4deg;margin-top:34px}
+
+/* Ablauf */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:64px}
+.step .shot{aspect-ratio:3/4;border-radius:28px;background:var(--surface);border:1px solid #fff1;margin-bottom:24px;position:relative;overflow:hidden;display:grid;place-items:center}
+.step .shot span{font-family:var(--serif);font-size:96px;color:#ffffff22}
+.step p{color:var(--muted);margin:10px 0 0}
+@media(max-width:900px){.steps{grid-template-columns:1fr}}
+
+/* Datenschutz */
+.privacy{background:var(--surface);border-radius:32px;padding:64px}
+.privacy ul{margin:32px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:18px 40px}
+.privacy li{padding-left:28px;position:relative;color:#ddd}
+.privacy li::before{content:"✱";position:absolute;left:0;color:var(--accent)}
+@media(max-width:900px){.privacy{padding:32px}.privacy ul{grid-template-columns:1fr}}
+
+/* FAQ */
+.faq details{border-bottom:1px solid #fff2;padding:22px 0}
+.faq summary{cursor:pointer;font-family:var(--serif);font-size:28px;list-style:none;display:flex;justify-content:space-between;gap:20px}
+.faq summary::after{content:"+";color:var(--accent)}
+.faq details[open] summary::after{content:"–"}
+.faq p{color:var(--muted);max-width:70ch;margin:14px 0 0}
+
+/* CTA + Footer */
+.final{text-align:center}
+.final form{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:36px}
+.final input{padding:16px 22px;border-radius:999px;border:1px solid #fff3;background:#161616;color:#fff;font:inherit;min-width:min(100%,320px)}
+.final small{display:block;margin-top:16px;color:var(--muted)}
+#formmsg{color:var(--accent);margin-top:14px;min-height:1.4em}
+footer{border-top:1px solid #fff1;padding:48px 0;color:var(--muted);font-size:14px}
+footer .row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer nav{display:flex;gap:24px;flex-wrap:wrap}
+
+/* Bewegung nur wenn erlaubt */
+[data-motion="enabled"] .reveal{opacity:0;translate:0 28px;transition:opacity .8s ease,translate .8s ease}
+[data-motion="enabled"] .reveal.in{opacity:1;translate:0 0}
+[data-motion="enabled"] .phone.a{animation:float 7s ease-in-out infinite}
+[data-motion="enabled"] .phone.b{animation:float 8s ease-in-out -2s infinite}
+@keyframes float{50%{translate:0 -14px}}
+</style>
+<script>if(!matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.dataset.motion="enabled";</script>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a class="logo" href="#top">Knips<span>.</span></a>
+    <ul>
+      <li><a href="#ablauf">So funktioniert's</a></li>
+      <li><a href="#anlaesse">Anlässe</a></li>
+      <li><a href="#datenschutz">Datenschutz</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a class="btn" href="#warteliste">Warteliste</a>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <div class="wrap grid">
+    <div>
+      <h1>Euer Tag,<br><em>durch alle Augen.</em></h1>
+      <p class="lead">Knips ist die private Einwegkamera für Hochzeiten, Geburtstage und Feiern. Gäste scannen einen QR Code, ohne App Download, und knipsen drauflos. Das Album öffnet sich erst nach dem Fest.</p>
+      <div class="hero-actions">
+        <a class="btn" href="#warteliste">Auf die Warteliste</a>
+        <a class="btn ghost" href="#ablauf">So funktioniert's</a>
+      </div>
+      <div class="qrbox">
+        <div class="qr" role="img" aria-label="Platzhalter für QR Code"></div>
+        <div><strong>Kamera ausprobieren</strong><small>Platzhalter. Hier folgt der echte Code zur Demo.</small></div>
+      </div>
+    </div>
+    <div class="phones" aria-hidden="true">
+      <div class="phone a">
+        <div class="cover"><h4>Lena &amp; Jonas<br>Hochzeit</h4>
+          <div class="stats"><div>412<small>Momente</small></div><div>1 T 23 Std<small>Verbleibend</small></div><div>86<small>Gäste</small></div></div></div>
+        <div class="gallery"><i class="g1"></i><i class="g2"></i><i class="g3"></i><i class="g4"></i></div>
+      </div>
+      <div class="phone b">
+        <div class="topbar">Lena &amp; Jonas Hoch…<small>noch 1 T 23 Std</small></div>
+        <div class="viewfinder"></div>
+        <div class="counter">24</div><div class="shutter"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vorteile">
+  <div class="wrap">
+    <p class="eyebrow reveal">Warum Knips</p>
+    <h2 class="reveal">Erinnerungen, die ihr<br><em>nie gesehen habt.</em></h2>
+    <div class="benefits">
+      <div class="benefit reveal"><div class="num">01</div><h3>Ohne Download</h3><p>Gäste scannen den QR Code am Eingang und sind in Sekunden dabei. Auch Oma.</p></div>
+      <div class="benefit reveal"><div class="num">02</div><h3>Verzögerte Freigabe</h3><p>Niemand schaut während der Feier aufs Handy. Die Fotos erscheinen erst, wenn ihr es festlegt.</p></div>
+      <div class="benefit reveal"><div class="num">03</div><h3>Alle Perspektiven</h3><p>Ein Album, 80 Blickwinkel. Ihr seht die Feier, die ihr selbst nie sehen konntet.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="anlaesse" class="cases">
+  <div class="wrap">
+    <p class="eyebrow reveal">Anlässe</p>
+    <p id="quote" class="quote" aria-live="polite">„Eure Gäste haben Momente festgehalten, die ihr nie gesehen habt.“</p>
+    <div class="tabs" role="tablist" aria-label="Anlässe">
+      <button class="tab" role="tab" aria-selected="true" data-i="0">Hochzeit</button>
+      <button class="tab" role="tab" aria-selected="false" data-i="1">Geburtstag</button>
+      <button class="tab" role="tab" aria-selected="false" data-i="2">Reise</button>
+      <button class="tab" role="tab" aria-selected="false" data-i="3">Party</button>
+      <button class="tab" role="tab" aria-selected="false" data-i="4">Alltag</button>
+    </div>
+    <div class="case-stage" aria-hidden="true"><div class="card" id="c1"></div><div class="card" id="c2"></div></div>
+  </div>
+</section>
+
+<section id="ablauf">
+  <div class="wrap">
+    <p class="eyebrow reveal">So funktioniert's</p>
+    <h2 class="reveal">Wie aus einem Tag<br><em>ein Film wird.</em></h2>
+    <div class="steps">
+      <div class="step reveal"><div class="shot"><span>1</span></div><h3>Album anlegen</h3><p>Gebt dem Event einen Namen, wählt Titelbild und legt fest, wann die Fotos sichtbar werden.</p></div>
+      <div class="step reveal"><div class="shot"><span>2</span></div><h3>Gäste einladen</h3><p>QR Code drucken oder per Link teilen. Ein Scan genügt, kein Konto und keine App nötig.</p></div>
+      <div class="step reveal"><div class="shot"><span>3</span></div><h3>Gemeinsam knipsen</h3><p>Jeder Gast hat seine Einwegkamera mit begrenzter Aufnahmezahl. Das Ergebnis seht ihr nach dem Fest.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="datenschutz">
+  <div class="wrap">
+    <div class="privacy reveal">
+      <p class="eyebrow">Datenschutz</p>
+      <h2>Eure Fotos gehören <em>euch.</em></h2>
+      <ul>
+        <li>Server in der EU (Ziel, vor Start verbindlich festlegen)</li>
+        <li>Gäste stimmen vor dem ersten Foto ausdrücklich zu</li>
+        <li>Album nur per Link für eure Gäste sichtbar</li>
+        <li>Ihr bestimmt, wann Fotos gelöscht werden</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="faq">
+  <div class="wrap">
+    <h2 class="reveal">Häufige Fragen</h2>
+    <div style="margin-top:40px">
+      <details><summary>Müssen Gäste eine App installieren?</summary><p>Nein. Der QR Code öffnet die Kamera direkt im Browser.</p></details>
+      <details><summary>Wann sehen wir die Fotos?</summary><p>Ihr legt den Zeitpunkt selbst fest, zum Beispiel am Morgen nach der Feier.</p></details>
+      <details><summary>Wie viele Fotos darf jeder Gast machen?</summary><p>Das stellt ihr beim Anlegen ein, wie bei einer echten Einwegkamera.</p></details>
+      <details><summary>Was kostet Knips?</summary><p>Die Preise stehen noch nicht fest. Tragt euch in die Warteliste ein, dann erfahrt ihr es als Erste.</p></details>
+      <details><summary>Wie steht es um den Datenschutz?</summary><p>Fotos von Gästen sind personenbezogene Daten. Wir hosten in der EU und holen vor dem ersten Foto die Einwilligung ein.</p></details>
+    </div>
+  </div>
+</section>
+
+<section id="warteliste" class="final">
+  <div class="wrap">
+    <h2 class="reveal">Das Leben passiert <em>einmal.</em><br>Haltet es fest.</h2>
+    <form id="wl" novalidate>
+      <input type="email" name="email" placeholder="Eure E Mail Adresse" aria-label="E Mail Adresse" required>
+      <button class="btn" type="submit">Auf die Warteliste</button>
+    </form>
+    <small>Mit dem Eintrag stimmt ihr der Speicherung eurer E Mail zu. Abmeldung jederzeit.</small>
+    <div id="formmsg" role="status"></div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap row">
+    <span>© 2026 Knips (Arbeitstitel)</span>
+    <nav><a href="#">Impressum</a><a href="#">Datenschutz</a><a href="#">AGB</a></nav>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // Einblenden beim Scrollen
+  var els=document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.15});
+    els.forEach(function(el){io.observe(el)});
+  }else{els.forEach(function(el){el.classList.add('in')})}
+
+  // Anlass Tabs
+  var data=[
+    ['„Eure Gäste haben Momente festgehalten, die ihr nie gesehen habt.“','linear-gradient(150deg,#d9a38a,#3a2420)','linear-gradient(150deg,#a9b9a0,#1f2e25)'],
+    ['„Derselbe Geburtstag, gesehen durch die Augen jedes Freundes.“','linear-gradient(150deg,#e9d3a6,#5b3f1b)','linear-gradient(150deg,#d98aa0,#3d1b28)'],
+    ['„Ihr wart am selben Ort und habt ihn doch ganz anders erlebt.“','linear-gradient(150deg,#9ab0c9,#1d2b40)','linear-gradient(150deg,#8fcfb0,#1a3a2c)'],
+    ['„Die besten Fotos entstehen, wenn niemand pose macht.“','linear-gradient(150deg,#b48ae0,#251a3d)','linear-gradient(150deg,#f2b987,#3d2412)'],
+    ['„Nicht jeder Film braucht einen besonderen Tag.“','linear-gradient(150deg,#cfcab8,#3a372c)','linear-gradient(150deg,#9ab0c9,#2a3446)']
+  ];
+  var q=document.getElementById('quote'),c1=document.getElementById('c1'),c2=document.getElementById('c2');
+  function show(i){q.style.opacity=0;setTimeout(function(){q.textContent=data[i][0];q.style.opacity=1},200);c1.style.background=data[i][1];c2.style.background=data[i][2]}
+  show(0);
+  document.querySelectorAll('.tab').forEach(function(t){
+    t.addEventListener('click',function(){
+      document.querySelectorAll('.tab').forEach(function(x){x.setAttribute('aria-selected','false')});
+      t.setAttribute('aria-selected','true');show(+t.dataset.i);
+    });
+  });
+
+  // Warteliste: bewusst NICHT angebunden. Kein Versand, keine Speicherung.
+  document.getElementById('wl').addEventListener('submit',function(e){
+    e.preventDefault();
+    var v=this.email.value.trim();
+    document.getElementById('formmsg').textContent=/^\S+@\S+\.\S+$/.test(v)
+      ? 'Demo: Das Formular ist noch nicht angebunden. Es wurde nichts gespeichert.'
+      : 'Bitte eine gültige E Mail Adresse eingeben.';
+  });
+})();
+</script>
+</body>
+</html>
